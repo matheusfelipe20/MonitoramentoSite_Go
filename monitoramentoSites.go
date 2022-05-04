@@ -17,7 +17,7 @@ const delayMonitoramento = 2
 func main() {
 
 	exibeIntroducao()
-	regristraLog("site-falso", false)
+
 	for {
 		exibeMenu()
 
@@ -125,13 +125,13 @@ func leSitesArquivos() []string {
 
 func regristraLog(site string, status bool) {
 
-	arquivo, err := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE, 0666)
+	arquivo, err := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	arquivo.WriteString(site + "- online: " + strconv.FormatBool(status))
+	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + " - online: " + strconv.FormatBool(status) + "\n")
 
 	arquivo.Close()
 }
